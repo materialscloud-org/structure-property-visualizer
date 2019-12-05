@@ -15,11 +15,11 @@ if __name__ == '__main__':
           classifiers=["Programming Language :: Python"],
           version="0.1.1",
           install_requires=[
-              "bokeh",
-              "jsmol-bokeh-extension>=0.2",
-              "pandas",
-              "sqlalchemy",
-              "requests",
+              "bokeh~=1.3.4",
+              "jsmol-bokeh-extension~=0.2.1",
+              "pandas~=0.24.2",
+              "sqlalchemy~=1.0.19",
+              "requests~=2.21.0",
           ],
           extras_require={
               "pre-commit":
