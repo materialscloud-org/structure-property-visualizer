@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=unsubscriptable-object, too-many-locals
-from __future__ import print_function
-from __future__ import absolute_import
+# pylint: disable=unsubscriptable-object,too-many-locals,missing-function-docstring, redefined-outer-name
 import collections
 from copy import copy
 from os.path import join
@@ -9,15 +7,13 @@ from os.path import join
 from bokeh.plotting import figure
 from bokeh.layouts import layout, widgetbox
 import bokeh.models as bmd
-from bokeh.palettes import Viridis256
+from bokeh.palettes import Viridis256  # pylint: disable=no-name-in-module
 from bokeh.models.widgets import RangeSlider, Select, Button, PreText, CheckboxButtonGroup
 from bokeh.io import curdoc
 
 from figure import config
 from figure.query import get_data_sqla as get_data
 from figure.query import data_empty
-from six.moves import map
-from six.moves import range
 
 html = bmd.Div(text=open(join(config.static_dir, 'description.html')).read(),
                width=800)
@@ -26,7 +22,7 @@ redraw_plot = False
 
 
 def get_preset_label_from_url():
-    # get preset for figure from arguments
+    """get preset for figure from arguments"""
     args = curdoc().session_context.request.arguments
     try:
         preset_label = args.get('preset')[0]
@@ -232,6 +228,7 @@ controls = [inp_x, inp_y, inp_clr] + [_v for k, _v in filters_dict.items()
 
 
 def update_legends(ly):
+    """Update figure legends."""
 
     q_x = config.quantities[inp_x.value]
     q_y = config.quantities[inp_y.value]
@@ -322,7 +319,6 @@ def update():
     update_legends(ly)
     plot_info.text += ' done!'
     btn_plot.button_type = 'success'
-    return
 
 
 btn_plot.on_click(update)

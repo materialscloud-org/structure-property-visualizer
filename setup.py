@@ -25,4 +25,7 @@ if __name__ == '__main__':
             'sqlalchemy~=1.3.0',
             'requests~=2.21.0',
         ],
-        extras_require={'pre-commit': ['pre-commit~=2.2', 'pylint~=2.6.0']})
+        extras_require={
+            'pre-commit': ['pre-commit~=2.2', 'pylint~=2.6.0'],
+            'aiida': ['aiida-core~=1.2']
+        })

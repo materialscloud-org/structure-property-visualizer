@@ -7,6 +7,7 @@ from __future__ import absolute_import
 
 def get_sqlite_data(name, plot_info):
     """Query the sqlite database"""
+    # disable=no-member,no-name-in-module,import-error
     from import_db import automap_table, engine
     from sqlalchemy.orm import sessionmaker
 
@@ -16,7 +17,7 @@ def get_sqlite_data(name, plot_info):
 
     Table = automap_table(engine)
 
-    query = session.query(Table).filter_by(name=str(name))
+    query = session.query(Table).filter_by(name=str(name))  # pylint:disable=no-member
 
     nresults = query.count()
     if nresults == 0:
@@ -27,13 +28,10 @@ def get_sqlite_data(name, plot_info):
 
 def get_data_aiida(cif_uuid, plot_info):
     """Query the AiiDA database"""
-    from aiida import load_dbenv, is_dbenv_loaded
-    from aiida.backends import settings
-    if not is_dbenv_loaded():
-        load_dbenv(profile=settings.AIIDADB_PROFILE)
-    from aiida.orm.querybuilder import QueryBuilder
-    from aiida.orm.data.parameter import ParameterData
-    from aiida.orm.data.cif import CifData
+    from aiida import load_profile
+    from aiida.orm import QueryBuilder, Dict, CifData
+
+    load_profile()
 
     qb = QueryBuilder()
     qb.append(CifData,
@@ -43,7 +41,7 @@ def get_data_aiida(cif_uuid, plot_info):
               tag='cifs',
               project='*')
     qb.append(
-        ParameterData,
+        Dict,
         descendant_of='cifs',
         project='*',
     )
