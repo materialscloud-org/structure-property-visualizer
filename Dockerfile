@@ -36,7 +36,6 @@ COPY select-figure ./select-figure
 RUN ln -s /app/jmol-14.29.22/jsmol ./detail/static/jsmol
 COPY setup.py ./
 RUN pip install -e .
-RUN reentry scan -r aiida
 COPY serve-app.sh /opt/
 
 # start bokeh server
