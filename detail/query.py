@@ -28,7 +28,7 @@ def get_sqlite_data(name, plot_info):
 
 def get_data_aiida(cif_uuid, plot_info):
     """Query the AiiDA database"""
-    from aiida import load_profile
+    from figure.aiida import load_profile
     from aiida.orm import QueryBuilder, Dict, CifData
 
     load_profile()
