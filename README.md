@@ -62,7 +62,7 @@ In order to keep the docker image size manageable, it is best to keep the AiiDA 
  1. communicate the docker container how to connect to the AiiDA database
  2. mount the AiiDA file repository inside the docker container
 
-For the first step you already find a couple of (commented) variables in the `Dockerfile`, as well a python function to load an AiiDA profile environment from these variables.
+For the first step you already find a couple of (commented) variables in the `Dockerfile`, as well a python function `figure.aiida.load_profile` to load an AiiDA profile environment from these variables.
 
 For the second step, modify the `docker-compose.yml` to mount the AiiDA file repository instead of the `data/` directory.
 
