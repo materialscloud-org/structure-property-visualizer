@@ -2,10 +2,7 @@
 # pylint: disable=unsubscriptable-object, too-many-locals
 from __future__ import print_function
 from __future__ import absolute_import
-from os.path import dirname, join
 
-from bokeh.layouts import layout
-import bokeh.models as bmd
 from bokeh.io import curdoc
 
 #html = bmd.Div(

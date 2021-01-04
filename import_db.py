@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+""" Import properties into sqlite database"""
 
-# Import properties into sqlite database
-
-from __future__ import print_function
-
-from __future__ import absolute_import
+# pylint: disable=missing-function-docstring,redefined-outer-name
+import re
 import pandas as pd
 import sqlalchemy
-import re
 
 folder_db = 'data/'
 structure_folder = folder_db + '/structures/'
@@ -20,8 +17,6 @@ db_params = 'sqlite:///{}database.db'.format(folder_db)
 # when storing structures on an object store
 os_url = 'https://object.cscs.ch/v1/AUTH_b1d80408b3d340db9f03d373bbde5c1e/discover-cofs/test_data/structures'
 
-data = None
-
 engine = sqlalchemy.create_engine(db_params, echo=False)
 pandas_sql = pd.io.sql.pandasSQL_builder(engine, schema=None)
 
@@ -29,6 +24,7 @@ columns_json = {}
 
 
 def parse_csv(path):
+    """Parse CSV with structure data"""
     data = pd.read_csv(path,
                        low_memory=False,
                        verbose=1,
@@ -38,6 +34,7 @@ def parse_csv(path):
 
 
 def add_filenames(data):
+    """Add filenames to dataframe"""
     print('Adding filenames')
     fnames = [
         '{}.{}'.format(row['name'], structure_extension)
@@ -58,6 +55,7 @@ def to_sql_k(self,
              chunksize=None,
              dtype=None,
              **kwargs):
+    """Create sql table from dataframe."""
     if dtype is not None:
         from sqlalchemy.types import to_instance, TypeEngine
         for col, my_type in dtype.items():
@@ -88,7 +86,7 @@ def rename_columns(data):
     #rep_dict = { l: l.replace(' ', '_') for l in labels }
     #data.rename(index=str, columns=rep_dict, inplace=True)
 
-    unit_regex = re.compile('\[(.*?)\]')
+    unit_regex = re.compile(r'\[(.*?)\]')
     for label in labels:
         match = re.search(unit_regex, label)
         # provide units as separate column
@@ -105,6 +103,7 @@ def rename_columns(data):
 
 
 def fill_db():
+    """Fill database from dataframe."""
     #data.to_sql(table_name, con=engine, if_exists='replace')
     print('Filling database')
     to_sql_k(pandas_sql,

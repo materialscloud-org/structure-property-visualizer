@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 """Querying the DB
 """
-from __future__ import absolute_import
 from bokeh.models.widgets import RangeSlider, CheckboxButtonGroup
 from .config import max_points
-from six.moves import map
-from six.moves import zip
 # pylint: disable=too-many-locals
 data_empty = dict(x=[0], y=[0], uuid=['1234'], color=[0], name=['no data'])
 
@@ -49,8 +46,7 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
         plot_info.text = '{} COFs found.\nPlotting {}...'.format(
             nresults, max_points)
     else:
-        plot_info.text = '{} COFs found.\nPlotting {}...'.format(
-            nresults, nresults)
+        plot_info.text = '{r} COFs found.\nPlotting {r}...'.format(r=nresults)
 
     # x,y position
     x, y, clrs, names, filenames = list(zip(*results))
@@ -68,12 +64,10 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
 
 def get_data_aiida(projections, sliders_dict, quantities, plot_info):
     """Query the AiiDA database"""
-    from aiida import load_dbenv, is_dbenv_loaded
-    from aiida.backends import settings
-    if not is_dbenv_loaded():
-        load_dbenv(profile=settings.AIIDADB_PROFILE)
-    from aiida.orm.querybuilder import QueryBuilder
-    from aiida.orm.data.parameter import ParameterData
+    from aiida import load_profile
+    from aiida.orm import QueryBuilder, Dict
+
+    load_profile()
 
     filters = {}
 
@@ -96,7 +90,7 @@ def get_data_aiida(projections, sliders_dict, quantities, plot_info):
 
     qb = QueryBuilder()
     qb.append(
-        ParameterData,
+        Dict,
         filters=filters,
         project=['attributes.' + p
                  for p in projections] + ['uuid', 'extras.cif_uuid'],

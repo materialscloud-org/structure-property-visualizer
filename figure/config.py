@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 import collections
-import yaml
 from os.path import join, dirname
+import yaml
 
 static_dir = join(dirname(__file__), 'static')
 

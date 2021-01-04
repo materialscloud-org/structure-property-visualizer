@@ -1,0 +1,12 @@
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint.messages_control]
+disable = [
+    "import-outside-toplevel",
+    "duplicate-code",
+    "invalid-name",
+    "missing-module-docstring",
+    "no-else-return",
+    "global-statement",
+]

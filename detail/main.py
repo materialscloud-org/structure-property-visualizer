@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=unsubscriptable-object, too-many-locals
+# pylint: disable=unsubscriptable-object, too-many-locals, redefined-outer-name
 from __future__ import print_function
 from __future__ import absolute_import
 from os.path import dirname, join
@@ -30,6 +30,7 @@ btn_download_cif = Button(label='Download cif', button_type='primary')
 
 
 def get_name_from_url():
+    """Get structure name from URL parameter."""
     args = curdoc().session_context.request.arguments
     try:
         name = args.get('name')[0]
@@ -41,14 +42,15 @@ def get_name_from_url():
     return name
 
 
-def table_widget(entry):
+def table_widget(entry):  # disable=redefined-outer-name
+    """Create table widget."""
     from bokeh.models import ColumnDataSource
     from bokeh.models.widgets import DataTable, TableColumn
 
     entry_dict = copy(entry.__dict__)
     # Note: iterate over old dict, not the copy that is changing
-    for k, v in entry.__dict__.items():
-        if k == 'id' or k == '_sa_instance_state':
+    for k, _v in entry.__dict__.items():
+        if k in ['id', '_sa_instance_state']:
             del entry_dict[k]
 
         # use _units keys to rename corresponding quantity
