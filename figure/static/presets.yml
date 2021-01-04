@@ -21,7 +21,7 @@ default:
 3b:
   x: density
   y: surface_area
-  dimensions: 
+  dimensions:
   - 3
   density:
   - 0
@@ -80,25 +80,25 @@ default:
 
 # these would need coloring by topology
 12a:
-  bond_type: 
+  bond_type:
   - amide
   clr: net
   x: density
   y: deliverable_capacity
 12b:
-  bond_type: 
+  bond_type:
   - amine
   clr: net
   x: density
   y: deliverable_capacity
 12c:
-  bond_type: 
+  bond_type:
   - imine
   clr: net
   x: density
   y: deliverable_capacity
 12d:
-  bond_type: 
+  bond_type:
   - amide
   clr: net
   x: density

@@ -19,7 +19,7 @@ from figure.query import data_empty
 from six.moves import map
 from six.moves import range
 
-html = bmd.Div(text=open(join(config.static_dir, "description.html")).read(),
+html = bmd.Div(text=open(join(config.static_dir, 'description.html')).read(),
                width=800)
 
 redraw_plot = False
@@ -91,7 +91,8 @@ bondtypes = list(config.bondtype_dict.keys())
 bondtype_colors = list(config.bondtype_dict.values())
 
 # quantity selectors
-plot_options = [(q, config.quantities[q]['label']) for q in config.plot_quantities]
+plot_options = [(q, config.quantities[q]['label'])
+                for q in config.plot_quantities]
 inp_x = Select(title='X', options=plot_options)
 inp_y = Select(title='Y', options=plot_options)
 #inp_clr = Select(title='Color', options=plot_options)
@@ -141,7 +142,7 @@ for k in config.filter_list:
     if 'unit' not in list(v.keys()):
         desc = v['label']
     else:
-        desc = "{} [{}]".format(v['label'], v['unit'])
+        desc = '{} [{}]'.format(v['label'], v['unit'])
 
     if 'default' not in list(v.keys()):
         v['default'] = None
@@ -237,48 +238,48 @@ def update_legends(ly):
     p = ly.children[0].children[1]
 
     #title = "{} vs {}".format(q_x["label"], q_y["label"])
-    xlabel = "{} [{}]".format(q_x["label"], q_x["unit"])
-    ylabel = "{} [{}]".format(q_y["label"], q_y["unit"])
-    xhover = (q_x["label"], "@x {}".format(q_x["unit"]))
-    yhover = (q_y["label"], "@y {}".format(q_y["unit"]))
+    xlabel = '{} [{}]'.format(q_x['label'], q_x['unit'])
+    ylabel = '{} [{}]'.format(q_y['label'], q_y['unit'])
+    xhover = (q_x['label'], '@x {}'.format(q_x['unit']))
+    yhover = (q_y['label'], '@y {}'.format(q_y['unit']))
 
     q_clr = config.quantities[inp_clr.value]
     if 'unit' not in list(q_clr.keys()):
-        clr_label = q_clr["label"]
-        clr_val = "@color"
+        clr_label = q_clr['label']
+        clr_val = '@color'
     else:
-        clr_val = "@color {}".format(q_clr['unit'])
-        clr_label = "{} [{}]".format(q_clr["label"], q_clr["unit"])
+        clr_val = '@color {}'.format(q_clr['unit'])
+        clr_label = '{} [{}]'.format(q_clr['label'], q_clr['unit'])
     hover.tooltips = [
-        ("name", "@name"),
+        ('name', '@name'),
         xhover,
         yhover,
-        (q_clr["label"], clr_val),
+        (q_clr['label'], clr_val),
     ]
 
     if inp_clr.value == 'bond_type':
-        clr_label = "Bond type"
+        clr_label = 'Bond type'
         hover.tooltips = [
-            ("name", "@name"),
+            ('name', '@name'),
             xhover,
             yhover,
-            ("Bond type", "@color"),
+            ('Bond type', '@color'),
         ]
     else:
         q_clr = config.quantities[inp_clr.value]
-        clr_label = "{} [{}]".format(q_clr["label"], q_clr["unit"])
+        clr_label = '{} [{}]'.format(q_clr['label'], q_clr['unit'])
         hover.tooltips = [
-            ("name", "@name"),
+            ('name', '@name'),
             xhover,
             yhover,
-            (q_clr["label"], "@color {}".format(q_clr["unit"])),
+            (q_clr['label'], '@color {}'.format(q_clr['unit'])),
         ]
 
     p.xaxis.axis_label = xlabel
     p.yaxis.axis_label = ylabel
     p.title.text = clr_label
 
-    url = "detail?name=@name"
+    url = 'detail?name=@name'
     tap.callback = bmd.OpenURL(url=url)
     #tap.callback = bmd.CustomJS.from_py_func(update_tap)
     #tap.callback = bmd.CustomJS(code="""console.info("hello TapTool")""")
@@ -292,12 +293,12 @@ def check_uniqueness(attr, old, new):
     unique = list(set(selected))
     if len(unique) < len(selected):
         double = [i for i in selected if i in unique or unique.remove(i)]
-        double_str = ", ".join([config.quantities[d]['label'] for d in double])
-        plot_info.text = "Warning: {} doubly selected.".format(double_str)
+        double_str = ', '.join([config.quantities[d]['label'] for d in double])
+        plot_info.text = 'Warning: {} doubly selected.'.format(double_str)
         btn_plot.button_type = 'danger'
 
     else:
-        plot_info.text = ""
+        plot_info.text = ''
         btn_plot.button_type = 'primary'
 
 
@@ -308,7 +309,8 @@ def update():
 
     projections = [inp_x.value, inp_y.value, inp_clr.value, 'name', 'filename']
 
-    source.data = get_data(projections, filters_dict, config.quantities, plot_info)
+    source.data = get_data(projections, filters_dict, config.quantities,
+                           plot_info)
 
     if redraw_plot:
         figure = create_plot()
@@ -318,7 +320,7 @@ def update():
         redraw_plot = False
 
     update_legends(ly)
-    plot_info.text += " done!"
+    plot_info.text += ' done!'
     btn_plot.button_type = 'success'
     return
 
@@ -358,5 +360,5 @@ tab = bmd.Panel(child=ly, title='Scatter plot')
 tabs = bmd.widgets.Tabs(tabs=[tab])
 
 # Put the tabs in the current document for display
-curdoc().title = "Covalent Organic Frameworks"
+curdoc().title = 'Covalent Organic Frameworks'
 curdoc().add_root(layout([html, tabs]))
