@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ Queries to the DB
 """
 
@@ -19,7 +20,7 @@ def get_sqlite_data(name, plot_info):
 
     nresults = query.count()
     if nresults == 0:
-        plot_info.text = "No matching COF found."
+        plot_info.text = 'No matching COF found.'
         return None
     return query.one()
 
@@ -49,6 +50,6 @@ def get_data_aiida(cif_uuid, plot_info):
 
     nresults = qb.count()
     if nresults == 0:
-        plot_info.text = "No matching COF found."
+        plot_info.text = 'No matching COF found.'
         return None
     return qb.one()

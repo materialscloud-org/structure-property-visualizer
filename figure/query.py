@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Querying the DB
 """
 from __future__ import absolute_import
@@ -11,7 +12,7 @@ data_empty = dict(x=[0], y=[0], uuid=['1234'], color=[0], name=['no data'])
 
 def get_data_sqla(projections, sliders_dict, quantities, plot_info):
     """Query database using SQLAlchemy.
-    
+
     Note: For efficiency, this uses the the sqlalchemy.sql interface which does
     not go via the (more convenient) ORM.
     """
@@ -41,14 +42,14 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
 
     nresults = len(results)
     if not results:
-        plot_info.text = "No matching COFs found."
+        plot_info.text = 'No matching COFs found.'
         return data_empty
     elif nresults > max_points:
         results = results[:max_points]
-        plot_info.text = "{} COFs found.\nPlotting {}...".format(
+        plot_info.text = '{} COFs found.\nPlotting {}...'.format(
             nresults, max_points)
     else:
-        plot_info.text = "{} COFs found.\nPlotting {}...".format(
+        plot_info.text = '{} COFs found.\nPlotting {}...'.format(
             nresults, nresults)
 
     # x,y position
@@ -103,14 +104,14 @@ def get_data_aiida(projections, sliders_dict, quantities, plot_info):
 
     nresults = qb.count()
     if nresults == 0:
-        plot_info.text = "No matching COFs found."
+        plot_info.text = 'No matching COFs found.'
         return data_empty
 
-    plot_info.text = "{} COFs found. Plotting...".format(nresults)
+    plot_info.text = '{} COFs found. Plotting...'.format(nresults)
 
     # x,y position
     x, y, clrs, uuids, names, cif_uuids = list(zip(*qb.all()))
-    plot_info.text = "{} COFs queried".format(nresults)
+    plot_info.text = '{} COFs queried'.format(nresults)
     x = list(map(float, x))
     y = list(map(float, y))
     cif_uuids = list(map(str, cif_uuids))
