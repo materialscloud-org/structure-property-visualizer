@@ -1,25 +1,43 @@
-# yet another python formatter
-- repo: git://github.com/pre-commit/mirrors-yapf
-  rev: v0.27.0
+# # # Install pre-commit hooks via
+# pre-commit install
+
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v2.5.0
   hooks:
+  - id: double-quote-string-fixer
+    exclude: &exclude_files >
+      (?x)^(
+          tests/data/.*|
+          examples/data/.*|
+      )$
+  - id: end-of-file-fixer
+    exclude: *exclude_files
+  - id: fix-encoding-pragma
+    exclude: *exclude_files
+  - id: mixed-line-ending
+    exclude: *exclude_files
+  - id: trailing-whitespace
+    exclude: *exclude_files
+
+- repo: https://github.com/pre-commit/mirrors-yapf
+  rev: v0.30.0
+  hooks:
+  # yapf = yet another python formatter
   - id: yapf
+    name: yapf
+    types: [python]
+    exclude: >
+      (?x)^(
+          docs/.*|
+      )$
+    args: ['-i']
 
-# prospector: collection of linters
-- repo: git://github.com/guykisel/prospector-mirror
-  rev: 7ff847e779347033ebbd9e3b88279e7f3a998b45
+- repo: local
   hooks:
-  - id: prospector
-    # need to install prospector in the same python environment
-    # for checking import errors
+  # prospector: collection of linters
+  - id: pylint
+    name: pylint
+    entry: pylint
+    types: [python]
     language: system
-    types: [file, python]
-
-# modernizer: make sure our code-base is Python 3 ready
-- repo: https://github.com/python-modernize/python-modernize.git
-  rev: a234ce4e185cf77a55632888f1811d83b4ad9ef2
-  hooks:
-  - id: python-modernize
-    exclude: ^docs/
-    args:
-      - --write
-      - --nobackups

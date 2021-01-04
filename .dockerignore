@@ -1,2 +1,4 @@
 # ignore the data for rebuilds
 data/
+detail/static/jsmol
+jmol.zip
