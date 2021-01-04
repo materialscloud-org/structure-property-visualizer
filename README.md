@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/materialscloud-org/structure-property-visualizer.svg?branch=master)](https://travis-ci.org/materialscloud-org/structure-property-visualizer)
+[![Build Status](https://github.com/materialscloud-org/structure-property-visualizer/workflows/ci/badge.svg)](https://github.com/materialscloud-org/structure-property-visualizer/actions)
 
 # Structure-Property-Visualizer
 
