@@ -5,15 +5,15 @@ services:
     restart: always
     build:
       context: .
-      args:
-        BOKEH_PREFIX: /cofs
-    image: discover-cofs:master
-    command: ["/opt/serve-app.sh"]
+    image: structure-property-visualizer:master
     environment:
+      BOKEH_PREFIX: ""
+      # EXPLORE_URL: "https://dev-www.materialscloud.org/explore/pyrene-mofs"
       PYTHONPATH: '/project'
       SHELL: '/bin/bash'
 
     volumes:
-     - './data:/project/discover-cofs/data'
+     - './data:/app/data'
+    # - '/path/to/.aiida/repository/myprofile:/app/.aiida/repository/generic'
     ports:
-      - '3245:5006'
+      - '5006:5006'

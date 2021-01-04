@@ -2,7 +2,7 @@ FROM python:3.7
 
 # Install recent nodejs for bokeh & jsmol-bokeh-extension
 # See https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
-RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_15.x | bash -
 RUN apt-get update && apt-get install -y --no-install-recommends \
   nodejs \
   graphviz \
@@ -19,23 +19,25 @@ RUN unzip jmol.zip && cd jmol-14.29.22 && unzip jsmol.zip
 ENV AIIDA_PATH /app
 ENV PYTHONPATH /app
 
-# AiiDA profile vars
-ENV AIIDA_PROFILE generic
-ENV AIIDADB_HOST host.docker.internal
-ENV AIIDADB_PORT 5432
-ENV AIIDADB_ENGINE postgresql_psycopg2
-ENV AIIDADB_NAME generic_db
-ENV AIIDADB_USER db_user
-ENV AIIDADB_PASS ""
-ENV AIIDADB_BACKEND django
-ENV default_user_email info@materialscloud.org
+#  # AiiDA profile vars
+#  ENV AIIDA_PROFILE generic
+#  ENV AIIDADB_HOST host.docker.internal
+#  ENV AIIDADB_PORT 5432
+#  ENV AIIDADB_ENGINE postgresql_psycopg2
+#  ENV AIIDADB_NAME generic_db
+#  ENV AIIDADB_USER db_user
+#  ENV AIIDADB_PASS ""
+#  ENV AIIDADB_BACKEND django
+#  ENV default_user_email info@materialscloud.org
 
 COPY figure ./figure
 COPY detail ./detail
 COPY select-figure ./select-figure
+COPY import_db.py .
 RUN ln -s /app/jmol-14.29.22/jsmol ./detail/static/jsmol
 COPY setup.py ./
 RUN pip install -e .
+# RUN reentry scan
 COPY serve-app.sh /opt/
 
 # start bokeh server

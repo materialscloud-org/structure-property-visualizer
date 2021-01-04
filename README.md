@@ -2,7 +2,7 @@
 
 # Structure-Property-Visualizer
 
-Use this app to generate interactive visualizations like [these](https://www.materialscloud.org/discover/cofs#mcloudHeader) 
+Use this app to generate interactive visualizations like [these](https://www.materialscloud.org/discover/cofs#mcloudHeader)
 for atomic structures and their properties.
 
 ## Features
@@ -13,7 +13,7 @@ for atomic structures and their properties.
  * simple deployment on [materialscloud.org](https://www.materialscloud.org/discover/menu) through [Docker containers](http://docker.com)
  * driven by database backend:
    1. [sqlite](https://www.sqlite.org/index.html) database (default)
-   1. [AiiDA](http://www.aiida.net/) database backend (less tested)
+   1. [AiiDA](http://www.aiida.net/) database backend (requires customization)
 
 ## Getting started
 
@@ -54,6 +54,18 @@ The plots can be configured using a few YAML files in `figure/static`:
  * `filters.yml`: defines filters available in plot
  * `presets.yml`: defines presets for axis + filter settings
 
+### AiiDA support
+
+Instead of querying an sqlite database, you can also query an AiiDA database.
+In order to keep the docker image size manageable, it is best to keep the AiiDA profile *outside* the image and to
+
+ 1. communicate the docker container how to connect to the AiiDA database
+ 2. mount the AiiDA file repository inside the docker container
+
+For the first step you already find a couple of (commented) variables in the `Dockerfile`, as well a python function to load an AiiDA profile environment from these variables.
+
+For the second step, modify the `docker-compose.yml` to mount the AiiDA file repository instead of the `data/` directory.
+
 ## Docker deployment
 
 ```
@@ -61,5 +73,5 @@ pip install -e .
 ./prepare.sh
 docker-compose build
 docker-compose up
-# open http://localhost:3245/cofs/select-figure
+# open http://localhost:3245/select-figure
 ```
