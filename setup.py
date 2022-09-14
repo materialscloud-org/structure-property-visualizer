@@ -21,11 +21,12 @@ if __name__ == '__main__':
         install_requires=[
             'bokeh~=1.4.0',
             'jsmol-bokeh-extension~=0.2.1',
-            'pandas~=0.24.2',
-            'sqlalchemy~=1.3.0',
             'requests~=2.21.0',
+            'graphviz~=0.13.2',
+            'pandas~=1.0.5',
+            'sqlalchemy~=1.3.0',
         ],
         extras_require={
             'pre-commit': ['pre-commit~=2.2', 'pylint~=2.6.0'],
-            'aiida': ['aiida-core~=1.2']
+            'aiida': ['aiida-core~=1.6']
         })
