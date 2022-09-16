@@ -35,6 +35,7 @@ pip install -e .     # install python dependencies
 ### Running the app
 
 ```
+export PYTHONPATH="${PYTHONPATH}:/path/to/structure-property-visualizer"  # export pythonpath
 bokeh serve --show figure detail select-figure   # run app
 ```
 
